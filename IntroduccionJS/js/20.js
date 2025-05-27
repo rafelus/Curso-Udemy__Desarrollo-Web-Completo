@@ -1,15 +1,15 @@
 // Metodos de propiedad
 const reproductor = {
-    reproducir : function(id){
+    reproducir: function(id){
         console.log(`Reproduciendo Canción con el ID: ${id}.`);
     },
-    pausa : function(){
+    pausa: function(){
         console.log('Pausando...');
     },
-    crearPlaylist : function(nombre){
+    crearPlaylist: function(nombre){
         console.log(`Creada la Playlist con nombre: ${nombre}.`);
     },
-    reproducirPlaylist : function(nombre){
+    reproducirPlaylist: function(nombre){
         console.log(`Reproduciendo la Playlist con nombre: ${nombre}.`);
     },
 }
