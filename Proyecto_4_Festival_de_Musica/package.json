@@ -1,0 +1,31 @@
+{
+  "name": "festival_de_musica",
+  "version": "1.0.0",
+  "description": "Aprendiendo SASS y NPM",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch src/scss:build/css",
+    "dev": "gulp dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafelus/Curso-Udemy__Desarrollo-Web-Completo.git"
+  },
+  "keywords": [
+    "SASS",
+    "NPM",
+    "Gulp"
+  ],
+  "author": "Rafa Vazquez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rafelus/Curso-Udemy__Desarrollo-Web-Completo/issues"
+  },
+  "homepage": "https://github.com/rafelus/Curso-Udemy__Desarrollo-Web-Completo#readme",
+  "devDependencies": {
+    "gulp": "^5.0.1",
+    "gulp-sass": "^6.0.1",
+    "sass": "^1.89.1"
+  }
+}
