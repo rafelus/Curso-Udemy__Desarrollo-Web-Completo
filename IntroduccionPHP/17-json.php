@@ -17,15 +17,12 @@ $productos = [
         'disponible' => false,
     ]
 ];
-
-foreach($productos as $producto){ ?>
-    <ul>
-        <p>Producto</p>
-        <p>Nombre: <?php echo($producto['nombre']);?></p>
-        <p>Precio: <?php echo($producto['precio']);?></p>
-        <p>Disponibilidad: <?php echo($producto['disponible']) ? 'DISPONIBLE':'NO DISPONIBLE'?></p>
-    </ul>
-<?php
-}
+echo '<pre>';
+var_dump($productos);
+$json = json_encode($productos);
+var_dump($json);
+$json_array = json_decode($json);
+var_dump($json_array);
+echo '</pre>';
 
 include 'includes/footer.php';
