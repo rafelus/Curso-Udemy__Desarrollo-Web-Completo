@@ -20,22 +20,34 @@ $vendedorId = '';
 
 // Ejecuta el codigo despues de que el usuario envie el formulario
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $titulo = $_POST['titulo'];
-    $precio = $_POST['precio'];
-    $descripcion = $_POST['descripcion'];
-    $habitaciones = $_POST['habitaciones'];
-    $wc = $_POST['wc'];
-    $estacionamiento = $_POST['estacionamiento'];
+    $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
+    $precio = mysqli_real_escape_string($db, $_POST['precio']);
+    $descripcion = mysqli_real_escape_string($db, $_POST['descripcion']);
+    $habitaciones = mysqli_real_escape_string($db, $_POST['habitaciones']);
+    $wc = mysqli_real_escape_string($db, $_POST['wc']);
+    $estacionamiento = mysqli_real_escape_string($db, $_POST['estacionamiento']);
     $creado = date('Y/m/d');
     if (isset($_POST['vendedor'])){
-        $vendedorId = $_POST['vendedor'];
+        $vendedorId = mysqli_real_escape_string($db, $_POST['vendedor']);
     }
+    // Asignar files a la variable imagen
+    $imagen = $_FILES['imagen'];
+    $pesoImgKB = 1000*1000;
 
     if(!$titulo){
         $errores[] = "Debes añadir un titulo";
     }
     if(!$precio){
         $errores[] = "Debes añadir un precio";
+    }
+    if(!$imagen['name']){
+        $errores[] = "Debes cargar una imagen";
+    }
+    if($imagen['error']){
+        $errores[] = "Ha habido un problema al cargar la imagen";
+    }
+    if($imagen['size'] > $pesoImgKB){
+        $errores[] = "La imagen es demasiado grande";
     }
     if(strlen($descripcion)<50){
         $errores[] = "Debes añadir una descripción superior a 50 caracteres";
@@ -55,13 +67,24 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     // Revisar lista de errores
     if(empty($errores)){
+        /** Subida de archivos */
+        // Crear una carpeta
+        $carpetaImagenes = '../../imagenes/';
+        if(!is_dir($carpetaImagenes)){
+            mkdir($carpetaImagenes);
+        }
+        // Generar nombre unico para la imagen
+        $nombreImagen = md5(uniqid(rand(), true)).".jpg";
+        // Añadir la imagen
+        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes.$nombreImagen);
+
         // Insertar en la Base de Datos
-        $query = "INSERT INTO propiedades (titulo,precio,descripcion,habitaciones,wc,estacionamiento,creado,vendedores_Id) 
-        VALUES ('$titulo','$precio','$descripcion','$habitaciones','$wc','$estacionamiento','$creado','$vendedorId');";
+        $query = "INSERT INTO propiedades (titulo,precio,imagen,descripcion,habitaciones,wc,estacionamiento,creado,vendedores_Id) 
+        VALUES ('$titulo','$precio','$nombreImagen','$descripcion','$habitaciones','$wc','$estacionamiento','$creado','$vendedorId');";
         $resultado = mysqli_query($db, $query);
         if($resultado){
             // Redireccionar al usuario
-            header("Location: /admin");
+            header("Location: /admin?resultado=1");
         }
     }
 }
@@ -80,7 +103,7 @@ incluirTemplate('header');
             </div>
         <?php endforeach ?>
 
-        <form class="formulario" method="POST" action="/admin/propiedades/crear.php">
+        <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
             <fieldset>
                 <legend>Información general</legend>
                 <label for="titulo">Titulo: </label>
@@ -88,7 +111,7 @@ incluirTemplate('header');
                 <label for="precio">Precio: </label>
                 <input type="number" id="precio" name="precio" placeholder="Precio propiedad" value="<?php echo $precio?>">
                 <label for="imagen">Imagen: </label>
-                <input type="file" id="imagen" accept="image/jpeg, image/png">
+                <input type="file" id="imagen" accept="image/jpeg, image/png" name="imagen">
                 <label for="descripcion">Descripción: </label>
                 <textarea id="descripcion" name="descripcion"><?php echo $descripcion?></textarea>
             </fieldset>
