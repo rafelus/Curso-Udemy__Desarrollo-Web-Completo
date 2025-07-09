@@ -1,4 +1,11 @@
 <?php 
+// Comprobar estado autenticado de sesión
+require '../../includes/funciones.php';
+$auth = estadoAutenticado();
+if(!$auth){
+    header('Location: /');
+}
+
 // Base de Datos
 require '../../includes/config/database.php';
 $db = conectarDB();
@@ -89,7 +96,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
 }
 
-require '../../includes/funciones.php';
 incluirTemplate('header');
 ?>
 
