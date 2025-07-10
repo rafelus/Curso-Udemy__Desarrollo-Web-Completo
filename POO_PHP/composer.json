@@ -1,0 +1,17 @@
+{
+    "name": "rafa7/poo_php",
+    "description": "Aprendiendo Namespaces y Autoload",
+    "autoload": {
+        "psr-4": {
+            "Rafa7\\PooPhp\\": "src/",
+            "App\\": "./clases"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rafa",
+            "email": "correo@correo.com"
+        }
+    ],
+    "require": {}
+}
