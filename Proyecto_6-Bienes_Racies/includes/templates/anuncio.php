@@ -7,7 +7,6 @@ if(!$id){
 }
 
 // Importar la conexión
-require __DIR__.'/../config/database.php';
 $db = conectarDB();
 
 // Consultar

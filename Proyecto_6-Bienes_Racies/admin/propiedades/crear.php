@@ -1,13 +1,13 @@
 <?php 
 // Comprobar estado autenticado de sesión
-require '../../includes/funciones.php';
-$auth = estadoAutenticado();
-if(!$auth){
-    header('Location: /');
-}
+require '../../includes/app.php';
+use App\Propiedad;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
+
+estadoAutenticado();
 
 // Base de Datos
-require '../../includes/config/database.php';
 $db = conectarDB();
 
 // Consulta para obtener los vendedores
@@ -15,7 +15,7 @@ $consulVendedores = "SELECT * FROM vendedores";
 $resulVendedores = mysqli_query($db, $consulVendedores);
 
 // Arreglo con mensajes de Error
-$errores = [];
+$errores = Propiedad::getErrores();
 
 $titulo = '';
 $precio = '';
@@ -27,71 +27,35 @@ $vendedorId = '';
 
 // Ejecuta el codigo despues de que el usuario envie el formulario
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $titulo = mysqli_real_escape_string($db, $_POST['titulo']);
-    $precio = mysqli_real_escape_string($db, $_POST['precio']);
-    $descripcion = mysqli_real_escape_string($db, $_POST['descripcion']);
-    $habitaciones = mysqli_real_escape_string($db, $_POST['habitaciones']);
-    $wc = mysqli_real_escape_string($db, $_POST['wc']);
-    $estacionamiento = mysqli_real_escape_string($db, $_POST['estacionamiento']);
-    $creado = date('Y/m/d');
-    if (isset($_POST['vendedor'])){
-        $vendedorId = mysqli_real_escape_string($db, $_POST['vendedor']);
-    }
-    // Asignar files a la variable imagen
-    $imagen = $_FILES['imagen'];
-    $pesoImgKB = 1000*1000;
+    $propiedad = new Propiedad($_POST);
+    
+    // Generar nombre unico para la imagen
+    $nombreImagen = md5(uniqid(rand(), true)).".jpg";
 
-    if(!$titulo){
-        $errores[] = "Debes añadir un titulo";
-    }
-    if(!$precio){
-        $errores[] = "Debes añadir un precio";
-    }
-    if(!$imagen['name']){
-        $errores[] = "Debes cargar una imagen";
-    }
-    if($imagen['error']){
-        $errores[] = "Ha habido un problema al cargar la imagen";
-    }
-    if($imagen['size'] > $pesoImgKB){
-        $errores[] = "La imagen es demasiado grande";
-    }
-    if(strlen($descripcion)<50){
-        $errores[] = "Debes añadir una descripción superior a 50 caracteres";
-    }
-    if(!$habitaciones){
-        $errores[] = "Debes añadir un número de habitaciones";
-    }
-    if(!$wc){
-        $errores[] = "Debes añadir un número de baños";
-    }
-    if(!$estacionamiento){
-        $errores[] = "Debes añadir un número de plazas de estacionamiento";
-    }
-    if(!$vendedorId){
-        $errores[] = "Debes elegir un vendedor";
+    if($_FILES['imagen']['tmp_name']){
+    $manager = new ImageManager(Driver::class);
+    $imagen = $manager->read($_FILES['imagen']['tmp_name'])->cover(800, 600);
+    $propiedad->setImagen($nombreImagen);
     }
 
+    // Validar los atributos
+    $errores = $propiedad->validar();
+    
     // Revisar lista de errores
     if(empty($errores)){
         /** Subida de archivos */
         // Crear una carpeta
-        $carpetaImagenes = '../../imagenes/';
-        if(!is_dir($carpetaImagenes)){
-            mkdir($carpetaImagenes);
+        if(!is_dir(CARPETA_IMAGENES)){
+            mkdir(CARPETA_IMAGENES);
         }
-        // Generar nombre unico para la imagen
-        $nombreImagen = md5(uniqid(rand(), true)).".jpg";
-        // Añadir la imagen
-        move_uploaded_file($imagen['tmp_name'], $carpetaImagenes.$nombreImagen);
 
-        // Insertar en la Base de Datos
-        $query = "INSERT INTO propiedades (titulo,precio,imagen,descripcion,habitaciones,wc,estacionamiento,creado,vendedores_Id) 
-        VALUES ('$titulo','$precio','$nombreImagen','$descripcion','$habitaciones','$wc','$estacionamiento','$creado','$vendedorId');";
-        $resultado = mysqli_query($db, $query);
+        // Guarda la imagen en el servidor
+        $imagen->save(CARPETA_IMAGENES.$nombreImagen);
+
+        $resultado = $propiedad->guardar();
         if($resultado){
-            // Redireccionar al usuario
-            header("Location: /admin?resultado=1");
+        // Redireccionar al usuario
+        header("Location: /admin?resultado=1");
         }
     }
 }
@@ -132,7 +96,7 @@ incluirTemplate('header');
             </fieldset>
             <fieldset>
                 <legend>Vendedor</legend>
-                <select name="vendedor">
+                <select name="vendedorId">
                     <option value="" disabled selected>--Seleccione Vendedor--</option>
                     <?php while($row = mysqli_fetch_assoc($resulVendedores)): ?>
                     <option <?php echo $vendedorId === $row['id'] ? 'selected' : '';?> value="<?php echo $row['id']?>">
