@@ -14,5 +14,10 @@ function estadoAutenticado(){
     if(!$_SESSION['login']){
         header('Location: /');
     }
-    return true;
+}
+
+// Escapa / Sanitizar el HTML
+function s($html){
+    $s = htmlspecialchars($html);
+    return $s;
 }
