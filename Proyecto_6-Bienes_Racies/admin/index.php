@@ -1,12 +1,14 @@
 <?php 
 require '../includes/app.php';
 use App\Propiedad;
+use App\Vendedor;
 
 // Comprobar estado autenticado de sesión
 estadoAutenticado();
 
 // Implementar un metodo para obtener todas las propiedades
 $propiedades = Propiedad::all();
+$vendedores = Vendedor::all();
 
 // Muestra mensaje de exito al añadir una propiedad
 $resultado = $_GET['resultado'] ?? null;
@@ -17,17 +19,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $id = filter_var($id, FILTER_VALIDATE_INT);
 
     if($id){
-        // Eliminar la imagen
-        $query = "SELECT imagen FROM propiedades WHERE id = $id";
-        $consulta = mysqli_query($db, $query);
-        $imagenPropiedad = mysqli_fetch_assoc($consulta);
-        unlink('../imagenes/'.$imagenPropiedad['imagen']);
+        $propiedad = Propiedad::find($id);
         // Eliminar la propiedad
-        $query = "DELETE FROM propiedades WHERE id = $id";
-        $consulta = mysqli_query($db, $query);
-        if($consulta){
-            header('Location: /admin?resultado=3');
-        }
+        $propiedad->eliminar();
     }
 }
 

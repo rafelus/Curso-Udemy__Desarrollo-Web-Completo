@@ -1,6 +1,7 @@
 <?php 
 require '../../includes/app.php';
 use App\Propiedad;
+use App\Vendedor;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 
@@ -10,8 +11,7 @@ estadoAutenticado();
 $propiedad = new Propiedad();
 
 // Consulta para tener los vendedores
-$consulVendedores = "SELECT * FROM vendedores";
-$resulVendedores = mysqli_query($db, $consulVendedores);
+$vendedores = Vendedor::all();
 
 // Arreglo con mensajes de Error
 $errores = Propiedad::getErrores();
@@ -45,7 +45,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         // Guarda la imagen en el servidor
         $imagen->save(CARPETA_IMAGENES.$nombreImagen);
 
-        $propiedad->guardar();
+        $propiedad->crear();
     }
 }
 

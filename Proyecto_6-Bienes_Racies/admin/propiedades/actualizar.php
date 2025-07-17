@@ -1,6 +1,7 @@
 <?php 
 require '../../includes/app.php';
 use App\Propiedad;
+use App\Vendedor;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 
@@ -8,8 +9,7 @@ use Intervention\Image\ImageManager;
 estadoAutenticado();
 
 // Consulta para tener los vendedores
-$consulVendedores = "SELECT * FROM vendedores";
-$resulVendedores = mysqli_query($db, $consulVendedores);
+$vendedores = Vendedor::all();
 
 // Obtener id de la propiedad a actualizar y validar el id
 $idPropiedad = $_GET['id'];
@@ -48,9 +48,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     // Revisar lista de errores
     if(empty($errores)){
         // Almacenar la imagen
-        $imagen->save(CARPETA_IMAGENES.$nombreImagen);
+        if($_FILES['propiedad']['tmp_name']['imagen']){
+            $imagen->save(CARPETA_IMAGENES.$nombreImagen);
+        }
         // Actualizar en la Base de Datos
-        $propiedad->guardar();
+        $propiedad->actualizar();
     }
 }
 
