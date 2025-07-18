@@ -8,7 +8,7 @@ use Intervention\Image\ImageManager;
 // Comprobar estado autenticado de sesión
 estadoAutenticado();
 
-$propiedad = new Propiedad();
+$propiedad = new Propiedad;
 
 // Consulta para tener los vendedores
 $vendedores = Vendedor::all();
@@ -52,22 +52,22 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 incluirTemplate('header');
 ?>
 
-    <main class="contenedor seccion">
-        <h1>Crear</h1>
-        <a href="/admin/index.php" class="boton boton-verde">Volver</a>
+<main class="contenedor seccion">
+    <h1>Crear</h1>
+    <a href="/admin/index.php" class="boton boton-verde">Volver</a>
 
-        <?php foreach($errores as $error): ;?>
-            <div class="alerta error">
-                <?php echo $error ?>
-            </div>
-        <?php endforeach ?>
+    <?php foreach($errores as $error): ;?>
+        <div class="alerta error">
+            <?php echo $error ?>
+        </div>
+    <?php endforeach ?>
 
-        <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
-            <?php include '../../includes/templates/formulario_propiedades.php'?>
-            <input type="submit" value="Crear Propiedad" class="boton boton-verde">
-        </form>
-    </main>
+    <form class="formulario" method="POST" action="/admin/propiedades/crear.php" enctype="multipart/form-data">
+        <?php include '../../includes/templates/formulario_propiedades.php'?>
+        <input type="submit" value="Crear Propiedad" class="boton boton-verde">
+    </form>
+</main>
 
-    <?php 
-    incluirTemplate('footer');
-    ?>
+<?php 
+incluirTemplate('footer');
+?>
