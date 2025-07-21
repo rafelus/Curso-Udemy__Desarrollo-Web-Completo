@@ -1,6 +1,6 @@
 <?php 
-require 'includes/app.php';
-incluirTemplate('header');
+    require 'includes/app.php';
+    incluirTemplate('header');
 ?>
 
     <main class="contenedor seccion contenido-centrado">
@@ -12,6 +12,6 @@ incluirTemplate('header');
         </div>
     </main>
 
-    <?php 
+<?php 
     incluirTemplate('footer');
-    ?>
+?>
