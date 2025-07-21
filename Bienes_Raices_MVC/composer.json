@@ -1,0 +1,22 @@
+{
+    "name": "rafa7/proyecto_6-bienes_racies",
+    "description": "Creando un proyecto con POO",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Rafa Vázquez",
+            "email": "ravazsan1@outlook.es"
+        }
+    ],
+    "require": {
+        "intervention/image": "^3.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rafa7\\BienesRaicesMVC\\": "src/",
+            "MVC\\" : "./",
+            "Model\\" : "./models",
+            "Controller\\" : "./controllers"
+        }
+    }
+}

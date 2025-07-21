@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => 'rafa7/proyecto_6-bienes_racies',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '27c6b99a15200babeb5001c70d9d727e86b142de',
+        'type' => 'project',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        'intervention/gif' => array(
+            'pretty_version' => '4.2.2',
+            'version' => '4.2.2.0',
+            'reference' => '5999eac6a39aa760fb803bc809e8909ee67b451a',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../intervention/gif',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'intervention/image' => array(
+            'pretty_version' => '3.11.3',
+            'version' => '3.11.3.0',
+            'reference' => 'd0f097b8a3fa8fb758efc9440b513aa3833cda17',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../intervention/image',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'rafa7/proyecto_6-bienes_racies' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '27c6b99a15200babeb5001c70d9d727e86b142de',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);
