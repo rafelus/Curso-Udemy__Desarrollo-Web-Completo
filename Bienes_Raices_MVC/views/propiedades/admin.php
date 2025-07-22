@@ -42,4 +42,33 @@
             <?php endforeach ?>
         </tbody>
     </table>
+
+    <h2>Vendedores</h2>
+        <table class="vendedores">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody> <!-- Mostrar los resultados de la consulta a la base de datos-->
+                <?php foreach($vendedores as $row): ?>
+                <tr>
+                    <td> <?php echo $row->id?></td>
+                    <td> <?php echo $row->nombre." ".$row->apellido?></td>
+                    <td> <?php echo $row->telefono?></td>
+                    <td>
+                        <a href="/vendedores/actualizar?id=<?php echo $row->id?>" class="boton boton-amarillo-block">Actualizar Vendedor</a>
+                        <form method="POST" class="w-100 " action="/vendedores/eliminar">
+                            <input type="hidden" name="id" value="<?php echo $row->id?>">
+                            <input type="hidden" name="tipo" value="vendedor">
+                            <input type="submit" class="boton boton-rojo-block" value="Borrar Vendedor">
+                        </form>
+                    </td>
+                </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
 </main>

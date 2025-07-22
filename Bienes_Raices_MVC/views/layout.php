@@ -30,15 +30,15 @@
                 <div class="derecha">
                     <img src="/build/img/dark-mode.svg" alt="Boton Dark Mode" class="dark-mode-boton">
                     <nav class="navegacion">
-                        <a href="nosotros.php">Nosotros</a>
-                        <a href="anuncios.php">Anuncios</a>
-                        <a href="blog.php">Blog</a>
-                        <a href="contacto.php">Contacto</a>
+                        <a href="/nosotros">Nosotros</a>
+                        <a href="/anuncios">Anuncios</a>
+                        <a href="/blog">Blog</a>
+                        <a href="/contacto">Contacto</a>
                         <?php if($auth): ?>
-                            <a href="cerrar_sesion.php">Cerrar sesión</a>
+                            <a href="/cerrar_sesion">Cerrar sesión</a>
                         <?php endif?>
                         <?php if(!$auth): ?>
-                            <a href="login.php">Iniciar sesión</a>
+                            <a href="/login">Iniciar sesión</a>
                         <?php endif?>
                     </nav>
                 </div>
@@ -52,10 +52,10 @@
     <footer class="footer seccion">
         <div class="contenedor contenido-footer">
             <nav class="navegacion">
-                <a href="nosotros.php">Nosotros</a>
-                <a href="anuncios.php">Anuncios</a>
-                <a href="blog.php">Blog</a>
-                <a href="contacto.php">Contacto</a>
+                <a href="/nosotros">Nosotros</a>
+                <a href="/anuncios">Anuncios</a>
+                <a href="/blog">Blog</a>
+                <a href="/contacto">Contacto</a>
             </nav>
         </div>
         <p class="copyright">Todos los derechos Reservados <?php echo date('Y');?> &copy;</p>
