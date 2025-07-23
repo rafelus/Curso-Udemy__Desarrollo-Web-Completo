@@ -1,5 +1,19 @@
 <main class="contenedor seccion contenido-centrado">
     <h1>Contacto</h1>
+    <?php 
+    $resultado = $_GET['resultado'] ?? '';
+    if($resultado === "4"){
+        $mensaje = mostrarNotificacion(intval($resultado));
+        if($mensaje){ ?>
+            <p class="alerta exito"><?php echo s($mensaje) ?></p><br>
+        <?php }
+    } else if($resultado === "5"){
+        $mensaje = mostrarNotificacion(intval($resultado));
+        if($mensaje){ ?>
+            <p class="alerta error"><?php echo s($mensaje) ?></p><br>
+        <?php }
+    }
+    ?>
     <picture>
         <source srcset="build/img/destacada3.webp" type="webp">
         <source srcset="build/img/destacada3.jpg" type="jpeg">
@@ -13,12 +27,6 @@
             <label for="nombre">Nombre</label>
             <input id="nombre" type="text" placeholder="Tu nombre" name="contacto[nombre]" required>
 
-            <label for="email">E-mail</label>
-            <input id="email" type="email" placeholder="example@example.com" name="contacto[email]" required>
-
-            <label for="telefono">Telefono</label>
-            <input id="telefono" type="tel" placeholder="Tu numero" name="contacto[telefono]">
-
             <label for="mensaje">Mensaje: </label>
             <textarea id="mensaje" placeholder="Tu mensaje" name="contacto[mensaje]" required></textarea>
         </fieldset>
@@ -28,8 +36,8 @@
             <label for="opciones">Vende o Compra</label>
             <select id="opciones" name="contacto[opciones]" required>
                 <option value="" disabled selected>--Seleccione--</option>
-                <option value="vende">Vende</option>
-                <option value="compra">Compra</option>
+                <option value="vender">Vender</option>
+                <option value="comprar">Comprar</option>
             </select>
 
             <label for="presupuesto">Precio o Presupuesto</label>
@@ -46,12 +54,8 @@
                 <input name="contacto[formaContacto]" id="contactar-email" type="radio" value="email" required>
             </div>
 
-            <p>Si eligió teléfono, eliga la fecha y la hora</p>
-            <label for="fecha">Fecha:</label>
-            <input id="fecha" type="date" name="contacto[fecha]">
+            <div id="contacto"></div>
 
-            <label for="hora">Hora:</label>
-            <input id="hora" type="time" min="09:00" max="18:00" name="contacto[hora]">
         </fieldset>
         <input class="boton-verde" type="submit" value="Enviar">
     </form>

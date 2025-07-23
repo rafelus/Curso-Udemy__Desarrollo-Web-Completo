@@ -11,6 +11,10 @@ class ComposerStaticInitc94a3633e1ec9779f2aac2785a3e705e
         array (
             'Rafa7\\BienesRaicesMVC\\' => 22,
         ),
+        'P' => 
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
         'M' => 
         array (
             'Model\\' => 6,
@@ -31,6 +35,10 @@ class ComposerStaticInitc94a3633e1ec9779f2aac2785a3e705e
         'Rafa7\\BienesRaicesMVC\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'Model\\' => 
         array (

@@ -43,6 +43,12 @@ function mostrarNotificacion($codigo){
         case 3:
             $mensaje = 'Borrado Correctamente';
             break;
+        case 4:
+            $mensaje = 'Mensaje enviado correctamente';
+            break;
+        case 5:
+            $mensaje = 'Error al enviar el mensaje';
+            break;
         default:
             $mensaje = false;
             break;
