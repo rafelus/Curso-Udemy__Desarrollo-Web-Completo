@@ -5,12 +5,12 @@ use MVC\Router;
 use Controller\PropiedadController;
 use Controller\VendedorController;
 use Controller\PaginasController;
+use Controller\LoginController;
 
 $router = new Router();
 
 // Zona Admin
 $router->get('/admin', [PropiedadController::class, 'index']);
-
 $router->get('/propiedades/crear', [PropiedadController::class, 'crear']);
 $router->post('/propiedades/crear', [PropiedadController::class, 'crear']);
 $router->get('/propiedades/actualizar', [PropiedadController::class, 'actualizar']);
@@ -33,6 +33,10 @@ $router->get('/entrada', [PaginasController::class, 'entrada']);
 $router->get('/contacto', [PaginasController::class, 'contacto']);
 $router->post('/contacto', [PaginasController::class, 'contacto']);
 
-$router->comprobarRutas();
+// Login y autenticación
+$router->get('/login', [LoginController::class, 'login']);
+$router->post('/login', [LoginController::class, 'login']);
+$router->get('/logout', [LoginController::class, 'logout']);
 
+$router->comprobarRutas();
 ?>
